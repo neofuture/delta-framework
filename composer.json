@@ -1,0 +1,36 @@
+{
+    "name": "neofuture/delta-framework",
+    "license": "MIT",
+    "description": "Delta1 Ultralite framework",
+    "keywords": ["Framework"],
+    "type": "project",
+    "authors": [
+        {
+            "name": "Carl Fearby",
+            "email": "carlfearby@me.com"
+        }
+    ],
+    "require": {
+        "predis/predis" : "1.*",
+        "filp/whoops": "*",
+        "symfony/var-dumper" : "*",
+        "whoops/soap" : "*",
+        "doctrine/orm": "2.4.*",
+        "symfony/yaml": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "NeoFuture\\": "src/"
+        },
+        "files": [
+            "src/Library/Support/Helpers.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.004-dev"
+        }
+    }
+
+}
