@@ -2,10 +2,9 @@
 
 namespace NeoFuture\Library;
 
-use NeoFuture\Library\Database;
-use NeoFuture\Library\Cipher;
+//use NeoFuture\Library\Database;
+//use NeoFuture\Library\Cipher;
 use NeoFuture\Library\Support\Filesystem;
-//use Predis;
 use NeoFuture\Library\Support\Redis;
 
 /**
@@ -14,6 +13,7 @@ use NeoFuture\Library\Support\Redis;
  */
 class Session
 {
+
     public static $session;
     public static $_instance;
     public static $_redis;
@@ -44,7 +44,8 @@ class Session
 
         } elseif (Config::get("session.driver") == "redis") {
 
-            $session = Cipher::decrypt(Redis::get(Config::get("app.prefix") . ":session:" . $_COOKIE[Config::get("session.key")]));
+
+            $session = Cipher::decrypt(Redis::get(Config::get("app.prefix") . ":session:" . $cookieValue));
 
         }
 
@@ -212,6 +213,30 @@ class Session
             }
 
         }
+    }
+
+    public static function increment($key)
+    {
+        self::getInstance();
+
+        if (!isset(static::$session[$key])) {
+            static::$session[$key] = 1;
+        } else {
+            static::$session[$key]++;
+        }
+        return static::$session[$key];
+    }
+
+    public static function decrement($key)
+    {
+        self::getInstance();
+
+        if (!isset(static::$session[$key])) {
+            static::$session[$key] = 0;
+        } else {
+            static::$session[$key]--;
+        }
+        return static::$session[$key];
     }
 
     public static function all()

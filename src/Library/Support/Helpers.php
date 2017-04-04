@@ -25,6 +25,9 @@ function setup($thisKey, $default = null)
                     }
                 }
             }
+        } else {
+            echo ".setup file not found";
+            exit;
         }
     }
     return (isset($GLOBALS['setup'][$thisKey]) ? $GLOBALS['setup'][$thisKey] : $default);
@@ -39,12 +42,20 @@ function wtf(...$var)
     die(1);
 }
 
+/**
+ * @param $size
+ * @return string
+ */
 function formatSize($size)
 {
     $unit = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
     return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
 }
 
+/**
+ * @param $seconds
+ * @return string
+ */
 function formatDuration($seconds)
 {
     if ($seconds < 0.001) {
@@ -55,12 +66,21 @@ function formatDuration($seconds)
     return round($seconds, 2) . ' s';
 }
 
+/**
+ * @param string $content
+ * @param int $status
+ * @param array $headers
+ * @return \NeoFuture\Library\Response
+ */
 function response($content = '', $status = 200, array $headers = [])
 {
     $response = new \NeoFuture\Library\Response($content, $status, $headers);
     return $response;
 }
 
+/**
+ * @param $to
+ */
 function redirect($to)
 {
     list($routes, $middleware) = Router::getRoutes();
